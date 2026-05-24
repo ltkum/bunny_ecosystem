@@ -27,7 +27,8 @@ class DiscordClient():
             intents.members = True
 
             cls.bot = commands.Bot(command_prefix="!", intents=intents)
-            bunny = Bunny()
+            bunny = Bunny(
+                os.getenv("DISCORD_BOT_ROOT_NAME", "gendarmerienationale"))
             cls.bot.tree.add_command(bunny)
 
         return cls.bot

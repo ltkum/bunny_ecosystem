@@ -7,6 +7,6 @@ services:
     container_name: discord_ecosystem
 
     env_file:
-      - .env
+      - .discord.env
 
     restart: unless-stopped
