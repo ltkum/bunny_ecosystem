@@ -1,2 +1,7 @@
-.*.env.*
+
 .global_venv
+*.env
+
+Pipfile.lock
+
+*__pycache__
