@@ -34,7 +34,7 @@ class DiscordClient():
 
     @classmethod
     def run(cls):
-        discord_token = os.getenv('DISCORD_TOKEN', None)
+        discord_token = os.getenv('DISCORD_BOT_AUTH_TOKEN', None)
         if not discord_token:
             raise Exception('No discord token given')
 

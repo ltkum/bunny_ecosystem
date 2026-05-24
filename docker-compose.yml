@@ -1,0 +1,12 @@
+services:
+  discord_ecosystem:
+    build:
+      context: ./discord_ecosystem
+      dockerfile: Dockerfile
+
+    container_name: discord_ecosystem
+
+    env_file:
+      - .env
+
+    restart: unless-stopped
