@@ -26,25 +26,3 @@ async def create_thread(channel: discord.TextChannel, thread_name: str,
     for user in kwargs.get("users", []):
         await thread.add_user(user)
     return thread
-
-
-async def create_restricted_thread(channel: discord.TextChannel,
-                                   users: list[discord.Member],
-                                   thread_name: str):
-    """Create a thread and add
-
-    Args:
-        channel (discord.TextChannel): _description_
-        users (list[discord.Member]): _description_
-        thread_name (str): _description_
-
-    Returns:
-        _type_: _description_
-    """
-    thread = await channel.create_thread(
-        name=thread_name, type=discord.ChannelType.private_thread)
-
-    for user in users:
-        await thread.add_user(user)
-
-    return thread

@@ -32,7 +32,7 @@ HELP_INFORMATION = {
         },
         "example": "/revoke role=admin_team command=allow"
     },
-    "/lapin launch_tournament": {
+    "/lapin initialize_tournament": {
         "description":
         "Crée les canaux de groupes, les rôles et lance la phase de pick / ban pour les participants au tournoi",
         "is_restricted": True,
@@ -40,7 +40,7 @@ HELP_INFORMATION = {
             "config_file":
             "un fichier JSON qui contient les informations nécessaires à lancer le tournoi.",
         },
-        "example": "/launch_tournament [tournoi_2026.json]"
+        "example": "/initialize_tournament [tournoi_2026.json]"
     },
     "/lapin clean_tournament": {
         # idéalement, ça devrait aussi stopper toute interaction liée au tournoi en particulier de fonctionner.

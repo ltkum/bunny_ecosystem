@@ -13,7 +13,7 @@ class SimpleConfirmView(discord.ui.View):
     @discord.ui.button(label="Confirmer", style=discord.ButtonStyle.green)
     async def confirm(self, interaction: discord.Interaction,
                       button: discord.ui.Button):
-        await self.confirm_callback(interaction, self.kwargs)
+        await self.confirm_callback(interaction, **self.kwargs)
 
     @discord.ui.button(label="Annuler", style=discord.ButtonStyle.red)
     async def cancel(self, interaction: discord.Interaction,
