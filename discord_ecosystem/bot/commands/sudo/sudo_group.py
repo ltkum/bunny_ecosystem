@@ -14,16 +14,19 @@ async def set_permissions(interaction: discord.Interaction,
                           json_permission_config: discord.Attachment):
     if not interaction.guild_id or not isinstance(interaction.user,
                                                   discord.Member):
-        return await interaction.response.send_message("Non")
+        await interaction.response.send_message("Non")
+        return
     if not interaction.user.guild_permissions.administrator:
-        return await interaction.response.send_message("Admin only",
-                                                       ephemeral=True)
+        await interaction.response.send_message("Admin only", ephemeral=True)
+        return
 
     try:
         data = json.loads(await json_permission_config.read())
 
         load_guild_config(interaction.guild_id, data)
     except Exception:
-        return await interaction.response.send_message(
+        await interaction.response.send_message(
             "Quelque chose s'est mal passé :3")
+        return
     await interaction.response.send_message("Permissions Mises à jour")
+    return

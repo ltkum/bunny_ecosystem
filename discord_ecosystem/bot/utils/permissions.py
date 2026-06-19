@@ -16,6 +16,7 @@ from discord import app_commands
 GUILD_PERMISSIONS: dict[int, dict[str, list[int]]] = {}
 
 
+# TODO URGENT: documenter la structure des permissions
 def load_guild_config(guild_id: int, data: dict):
     GUILD_PERMISSIONS[guild_id] = data
 

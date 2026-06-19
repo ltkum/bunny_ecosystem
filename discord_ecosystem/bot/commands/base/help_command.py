@@ -8,74 +8,15 @@ HELP_INFORMATION = {
         "Montre une liste des commandes utilisables sur le serveur",
         "is_restricted": False,
         "parameters": None,
-        "example": "/help"
+        "example": "/lapin help"
     },
-    "/lapin allow": {
-        "description":
-        "Authorise un rôle à effectuer une commande sur le serveur",
-        "is_restricted": True,
+    "/lapin resultat": {
+        "description": "Envoie le résultat du match sur un canal dédié",
+        "is_restricted": False,
         "parameters": {
-            "role":
-            "Le nom du rôle qui va recevoir l'authorisation d'utiliser une commande",
-            "command": "Le nom de la commande qui va être authorisée"
+            "racetime_id": "l'id de la raceroom."
         },
-        "example": "/allow admin_team allow"
-    },
-    "/lapin revoke": {
-        "description":
-        "révoque l'authorisation d'un rôle à utiliser une commande sur le serveur",
-        "is_restricted": True,
-        "parameters": {
-            "role":
-            "Le nom du rôle qui n'aura plus l'autorisation d'utiliser une commande",
-            "command": "Le nom de la commande interdite"
-        },
-        "example": "/revoke role=admin_team command=allow"
-    },
-    "/lapin initialize_tournament": {
-        "description":
-        "Crée les canaux de groupes, les rôles et lance la phase de pick / ban pour les participants au tournoi",
-        "is_restricted": True,
-        "parameters": {
-            "config_file":
-            "un fichier JSON qui contient les informations nécessaires à lancer le tournoi.",
-        },
-        "example": "/initialize_tournament [tournoi_2026.json]"
-    },
-    "/lapin clean_tournament": {
-        # idéalement, ça devrait aussi stopper toute interaction liée au tournoi en particulier de fonctionner.
-        "description":
-        "Fait le cleanup d'un tournoi en enlevant les groupes, retirant les rôles aux participants, et archivant les canaux de discussions de groupes.",
-        "is_restricted": True,
-        "parameters": {
-            "config_file":
-            "Le même fichier de configuration que pour créer le tournoi",
-        },
-        "example": "/clean_tournament [tournoi_2026.json]"
-    },
-    "/lapin launch_brackets_round": {
-        "description":
-        "Crée des threads d'organisation pour chaque paire de la ronde en cours, et lance une phase de pick/ban",
-        "is_restricted": True,
-        "parameters": {
-            "config_file":
-            "Un fichier JSON qui contient le nom de la catégorie et les paires de joueurs",
-        },
-        "example": "/launch_brackets_round [brackets_1.json]"
-    },
-    "/lapin launch_weekly_loop": {
-        "description":
-        "Planifie et donne les éléments d'interactions pour la génération de la prochaine weekly. Va créer l'événement, et donner Quatre boutons pour gérer la weekly. L'un d'eux permet de lancer la gestion des restreams, Le second d'envoyer le message qui annonce le début de la weekly, le troisième va lancer la petite boucle pour montrer la raceroom, le dernier clôt le chapitre et restaure l'état de la weekly à son état original.",
-        "is_restricted":
-        True,
-        "parameters": {
-            "discord_command":
-            "la commande à utiliser sur discord pour générer une seed d'entraînement",
-            "rtgg_command": "la commande à utiliser dans la raceroom ",
-            "description": "Une description du mode de la prochaine weekly",
-        },
-        "example":
-        "/launch_weekly_loop '/preset open' '!race open' 'Ben c'est une open quoi'",
+        "example": "/lapin resultat wonderful-mushroom-22222"
     }
 }
 

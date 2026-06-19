@@ -80,7 +80,7 @@ async def manage_group(interaction: discord.Interaction, guild: discord.Guild,
                        silent=True)
     player_pairs: list[list[discord.Member]] = create_player_pairs(users)
     await interaction.followup.send(
-        "Nous lançons la phase de pick et de bans :3")
+        "Nous créons les Threads pour les joueurs :3")
     for pair in player_pairs:
         thread: discord.Thread = await create_thread(
             channel=channel,
@@ -89,6 +89,13 @@ async def manage_group(interaction: discord.Interaction, guild: discord.Guild,
             private=True,
             users=pair)
         time.sleep(2)
+        await send_message(recipient=thread,
+                           message=create_thread_msg(
+                               users=pair, nb_players_group=len(group)),
+                           view=None,
+                           silent=True)
+        return
+        # WE ARE NOT HANDLING THE PICK/BAN PHASE THROUGH
         button_definition = ButtonDefinition(
             "Lancez la phase de pick / ban", pick_ban_process, {
                 "player1": pair[0],
@@ -102,7 +109,7 @@ async def manage_group(interaction: discord.Interaction, guild: discord.Guild,
         launch_ban_view = CallbackButtonView([button_definition])
         await send_message(thread,
                            create_thread_msg(pair, len(group)),
-                           launch_ban_view,
+                           view=launch_ban_view,
                            silent=True)
 
 
