@@ -16,9 +16,12 @@ from bot.commands.tournament.launch.utils.pick_ban import pick_ban_process
 from bot.ui.views.link_buttons_view import LinksButtonView
 from bot.ui.views.callback_buttons_view import CallbackButtonView, ButtonDefinition
 
-channelLinks = [("Formulaire d'inscription", "https://perdu.com"),
-                ("Règlement du tournoi", "https://perdu.com"),
-                ("Liste des modes", "https://perdu.com")]
+channelLinks = [
+    ("Formulaire d'inscription", "https://zsr.link/zsrfrprogrammation"),
+    ("Règlement du tournoi",
+     "https://docs.google.com/document/d/1xHSXGCUyXfgy4hKeBOonkdWDySUJzzL2vO9TWQ3UsBA"
+     ), ("Liste des modes", "https://coxla1.github.io/modes-alttprfr/")
+]
 
 
 async def generate_structure(interaction: discord.Interaction,
@@ -49,13 +52,12 @@ async def generate_structure(interaction: discord.Interaction,
         guild, data["general_role_name"])
 
     for group in groups:
-        await manage_group(interaction, guild, category, general_role, group,
-                           data["tournament_modes"])
+        await manage_group(interaction, guild, category, general_role, group)
 
 
 async def manage_group(interaction: discord.Interaction, guild: discord.Guild,
                        category: discord.CategoryChannel,
-                       general_role: discord.Role, group, categories):
+                       general_role: discord.Role, group):
     role_name: str = group["role_name"]
     players_ids: list[int] = group["players"]
     channel_name = f"""organisation-groupe-{role_name}"""
@@ -97,15 +99,18 @@ async def manage_group(interaction: discord.Interaction, guild: discord.Guild,
         return
         # WE ARE NOT HANDLING THE PICK/BAN PHASE THROUGH
         button_definition = ButtonDefinition(
-            "Lancez la phase de pick / ban", pick_ban_process, {
+            "Lancez la phase de pick / ban",
+            pick_ban_process,
+            {
                 "player1": pair[0],
                 "player2": pair[1],
                 "result_channel": channel,
                 "thread": thread,
-                "categories": categories,
+                # "categories": categories,
                 "third_match_needed": len(group) == 3,
                 "message": "Merci beaucoup, nous allons lancer la phase de ban"
-            }, discord.ButtonStyle.green)
+            },
+            discord.ButtonStyle.green)
         launch_ban_view = CallbackButtonView([button_definition])
         await send_message(thread,
                            create_thread_msg(pair, len(group)),
