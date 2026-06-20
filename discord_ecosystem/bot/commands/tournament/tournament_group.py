@@ -17,15 +17,3 @@ async def initialize_tournament(interaction: discord.Interaction,
             "This command is only usable within a guild context")
         return
     await initialize(interaction, interaction.guild, json_config)
-
-
-@tournament.command(name="continue")
-@requires_group(group="tournament")
-@app_commands.guild_only()
-async def continue_tournament(interaction: discord.Interaction):
-    if not interaction.guild:
-        await interaction.response.send_message(
-            "This command is only usable within a guild context")
-        return
-    print(
-        "here, we would need to restart the tournament from the current state")

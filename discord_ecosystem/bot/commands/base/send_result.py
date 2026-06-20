@@ -82,30 +82,3 @@ def format_time(timestr: str, short=False):
     if short:
         return ':'.join(full_split)
     return f"{full_split[0]} Heure{'s' if int(full_split[0]) > 1 else ''}, {full_split[1]} Minute{'s' if int(full_split[1]) > 1 else ''} et {full_split[2]} Seconde{'s' if float(full_split[2]) > 1 else ''}"
-
-
-@app_commands.command(name="envoyer_resultat")
-async def upgraded_result(interaction: discord.Interaction,
-                          adversaire: discord.Member, as_tu_gagne: bool,
-                          racetime_id: str):
-    if not interaction.guild:
-        await interaction.response.send_message(
-            "Cette commande ne peut être lancée que depuis un serveur :3")
-        return
-    channel: discord.TextChannel | None = RelevantChannels.getSpecificChannel(
-        interaction.guild, "dashboard")
-    if not channel:
-        await interaction.response.send_message(
-            "Le canal pour donner les résultats n'a pas été défini. Merci de contacter les admins pour leur signaler.",
-            ephemeral=True)
-        return
-
-    await interaction.response.send_message(
-        "Nous allons transferrer le résultat, merci beaucoup.")
-
-    entrants_data = await get_result(interaction, racetime_id)
-    if entrants_data is None or len(entrants_data) > 2:
-        return
-    message = f"Résultat du match entre **{interaction.user.display_name}** et **{adversaire.display_name}**, transmis par **{interaction.user.display_name}**: le vainqueur est **{interaction.user.display_name if as_tu_gagne else adversaire.display_name}**\n"
-    message += format_short_result(entrants_data, racetime_id)
-    await channel.send(message, silent=True)
