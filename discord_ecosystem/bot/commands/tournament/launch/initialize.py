@@ -13,6 +13,7 @@ async def initialize(interaction: discord.Interaction, guild: discord.Guild,
         await interaction.response.send_message("""
     Bonjour, un tournoi est déjà en cours sur ce serveur :3
     """)
+        return
 
     await interaction.response.send_message("""
     Bonjour et merci d'essayer de lancer un tournoi. Nous allons vérifier que tout soit en ordre.

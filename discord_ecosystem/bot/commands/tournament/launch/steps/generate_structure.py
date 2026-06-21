@@ -96,26 +96,26 @@ async def manage_group(interaction: discord.Interaction, guild: discord.Guild,
                                users=pair, nb_players_group=len(group)),
                            view=None,
                            silent=True)
-        return
-        # WE ARE NOT HANDLING THE PICK/BAN PHASE THROUGH
-        button_definition = ButtonDefinition(
-            "Lancez la phase de pick / ban",
-            pick_ban_process,
-            {
-                "player1": pair[0],
-                "player2": pair[1],
-                "result_channel": channel,
-                "thread": thread,
-                # "categories": categories,
-                "third_match_needed": len(group) == 3,
-                "message": "Merci beaucoup, nous allons lancer la phase de ban"
-            },
-            discord.ButtonStyle.green)
-        launch_ban_view = CallbackButtonView([button_definition])
-        await send_message(thread,
-                           create_thread_msg(pair, len(group)),
-                           view=launch_ban_view,
-                           silent=True)
+    return
+    # WE ARE NOT HANDLING THE PICK/BAN PHASE THROUGH
+    button_definition = ButtonDefinition(
+        "Lancez la phase de pick / ban",
+        pick_ban_process,
+        {
+            "player1": pair[0],
+            "player2": pair[1],
+            "result_channel": channel,
+            "thread": thread,
+            # "categories": categories,
+            "third_match_needed": len(group) == 3,
+            "message": "Merci beaucoup, nous allons lancer la phase de ban"
+        },
+        discord.ButtonStyle.green)
+    launch_ban_view = CallbackButtonView([button_definition])
+    await send_message(thread,
+                       create_thread_msg(pair, len(group)),
+                       view=launch_ban_view,
+                       silent=True)
 
 
 def create_channel_msg(role, nb_players_group=4):
