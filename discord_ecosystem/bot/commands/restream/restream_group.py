@@ -5,6 +5,7 @@ from bot.utils.permissions import requires_group
 from common.relevant_channels import RelevantChannels
 from bot.commands.restream.ask_for_crew import ask_for_crew
 from bot.commands.restream.ask_for_broadcast_operator import ask_for_bo
+from bot.commands.restream.announce_restream import announce_restream
 
 restream = app_commands.Group(
     name="restream",
@@ -48,3 +49,23 @@ async def look_for_restream_crew(interaction: discord.Interaction):
         return
     await ask_for_crew(interaction, channel)
     pass
+
+
+@restream.command(name="annoncer_match")
+@requires_group(group="restream")
+@app_commands.guild_only()
+async def announce_match(interaction: discord.Interaction,
+                         joueur_1: discord.Member, joueur_2: discord.Member,
+                         canal_annonce: discord.TextChannel,
+                         dans_combien_de_minutes_en_gros: int, mode: str,
+                         on_a_une_équipe_de_restream: bool,
+                         racetime_room_id: str):
+    if not interaction.guild:
+        await interaction.response.send_message(
+            "Cette fonction ne marche pas hors d'un serveur :3")
+    await interaction.response.send_message(
+        "Nous allons essayer d'annoncer le match, merci de patienter quelques secondes :3"
+    )
+    await announce_restream(interaction, joueur_1, joueur_2, canal_annonce,
+                            dans_combien_de_minutes_en_gros, mode,
+                            on_a_une_équipe_de_restream, racetime_room_id)
