@@ -41,7 +41,7 @@ def format_single_match(match):
         track_needed += 1
     track_needed_msg = f"{' et' if comm_needed > 0 and track_needed > 0 else ''}{' ' + str(track_needed) + ' traqueur' if track_needed > 0 else ''}{'s' if track_needed>1 else ''}"
     ronde = match["round"]
-    mode = match["mode"]
+    mode = match.get("mode", None)
     return f"""
 <t:{match["timestamp"]}:f> : {ronde} - **{match["matchup"]}** {' - ' + mode if mode is not None else ''}.
 Il nous manque encore {comm_needed_msg}{track_needed_msg}."""
