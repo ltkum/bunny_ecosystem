@@ -14,7 +14,7 @@ BOT = DiscordClient.get_client()
 
 
 async def assign_initial_channels_and_roles():
-    for gd in ['TEST_SERVER', 'FFSR_SERVER']:  # 'FFSFR_SERVER'
+    for gd in ['TEST_SERVER', 'FFSFR_SERVER']:  # 'FFSFR_SERVER'
 
         guild = BOT.get_guild(int(os.getenv(f"{gd}_ID", "0")))
         if guild:
