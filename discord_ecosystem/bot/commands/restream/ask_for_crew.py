@@ -5,6 +5,7 @@ from aiohttp.web import view
 import discord
 from bot.ui.views.link_buttons_view import LinksButtonView
 from common.relevant_roles import RelevantRoles
+from bot.commands.restream.utils.in_seven_days import does_it_happen_within_a_week
 
 
 def format_crew_search_msg(matches_array: list, guild: discord.Guild):
@@ -12,11 +13,13 @@ def format_crew_search_msg(matches_array: list, guild: discord.Guild):
     Bonjour à tous chers <@&{RelevantRoles.getRoleFromGuild(guild, 'tracker')}> et <@&{RelevantRoles.getRoleFromGuild(guild, 'commentator')}>. J'espère que vous allez bien.
     Les matchs suivants vont avoir lieu d'ici à 7 jours et cherchent encore des volontaires pour permettre un restream.
     """
-    for match in matches_array:
+    sorted_matches = sorted(matches_array,
+                            key=lambda match: match["timestamp"])
+    for match in sorted_matches:
         if match.get(
                 "event", ""
-        ) == "ALttPR Tournoi francophone 9e Édition" and match_needs_crew(
-                match):
+        ) == "ALttPR Tournoi francophone 9e Édition" and does_it_happen_within_a_week(
+                match["timestamp"]) and match_needs_crew(match):
             msg += format_single_match(match)
     return msg
 

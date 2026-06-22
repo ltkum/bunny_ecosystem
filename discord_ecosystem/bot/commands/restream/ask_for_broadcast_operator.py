@@ -4,6 +4,7 @@ from aiohttp.web import view
 import discord
 from bot.ui.views.link_buttons_view import LinksButtonView
 from common.relevant_roles import RelevantRoles
+from bot.commands.restream.utils.in_seven_days import does_it_happen_within_a_week
 
 
 def format_bo_search_msg(matches_array: list, guild: discord.Guild):
@@ -11,10 +12,13 @@ def format_bo_search_msg(matches_array: list, guild: discord.Guild):
     Bonjour à tous chers  <@&{RelevantRoles.getRoleFromGuild(guild, 'bo')}> . J'espère que vous allez bien.
     Les matchs suivants vont avoir lieu d'ici à 7 jours et cherchent encore des BOS pour permettre un restream.
     """
-    for match in matches_array:
+    sorted_matches = sorted(matches_array,
+                            key=lambda match: match["timestamp"])
+    for match in sorted_matches:
         if match.get(
                 "event", ""
-        ) == "ALttPR Tournoi francophone 9e Édition" and match_need_bo(match):
+        ) == "ALttPR Tournoi francophone 9e Édition" and does_it_happen_within_a_week(
+                match["timestamp"]) and match_need_bo(match):
             msg += format_single_match(match)
     return msg
 
@@ -26,7 +30,7 @@ def match_need_bo(match):
 
 def format_single_match(match):
     ronde = match["round"]
-    mode = match["mode"]
+    mode = match.get("mode", None)
     return f"""
 <t:{match["timestamp"]}:f> : {ronde} - **{match["matchup"]}** {' - ' + mode if mode is not None else ''}."""
 
@@ -51,6 +55,3 @@ async def ask_for_bo(interaction: discord.Interaction,
                             os.getenv("ZSFR_SIGNUP_SHEET",
                                       'https://perdu.com'))
                        ]))
-    # here we fetch the JSON
-    # we create the message
-    # we send it to the relevant channel
